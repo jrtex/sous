@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ recipe.title }} · Sous{% endblock %}
+{% block body %}
+<div class="cook">
+  <header class="topbar">
+    <a href="/" class="back" aria-label="All recipes">‹</a>
+    <h1>{{ recipe.title }}</h1>
+    <span id="counter" class="counter"></span>
+  </header>
+
+  <section class="step" aria-live="polite">
+    <div id="section" class="section"></div>
+    <p id="step-text" class="step-text"></p>
+    <ul id="step-ingredients" class="chips"></ul>
+    <div id="step-timers" class="timer-buttons"></div>
+  </section>
+
+  <nav class="stepnav">
+    <button id="prev" type="button">Back</button>
+    <button id="next" type="button" class="primary">Next</button>
+  </nav>
+
+  <div id="timers" class="timers" hidden></div>
+
+  <section class="chat">
+    <ol id="log" class="log">
+      {% for m in history %}
+      <li class="msg {{ m.role }}">{{ m.content }}</li>
+      {% endfor %}
+    </ol>
+    <form id="ask" class="ask" autocomplete="off">
+      <input id="q" name="q" type="text" placeholder="Ask about this step…" maxlength="500" enterkeyhint="send">
+      <button type="submit" class="primary">Ask</button>
+    </form>
+  </section>
+</div>
+<script>
+  window.SOUS = {
+    sessionId: {{ session_id|tojson }},
+    steps: {{ steps|tojson }},
+  };
+</script>
+<script src="/static/cook.js"></script>
+{% endblock %}

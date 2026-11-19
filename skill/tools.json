@@ -1,0 +1,32 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "convert_units",
+      "description": "Convert a quantity between units of the same kind (volume to volume, weight to weight, temperature, time). Returns an error for volume<->weight. Cups/pints/quarts are US customary.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "quantity": {"type": "number", "description": "Numeric amount, e.g. 1.5"},
+          "from_unit": {"type": "string", "description": "Unit to convert from, e.g. 'cup', 'g', '°F'"},
+          "to_unit": {"type": "string", "description": "Unit to convert to, e.g. 'ml', 'oz', '°C'"}
+        },
+        "required": ["quantity", "from_unit", "to_unit"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "total_ingredient",
+      "description": "Total amount of one ingredient across all steps of the current recipe, plus the per-step breakdown.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string", "description": "Ingredient name or part of it, e.g. 'butter'"}
+        },
+        "required": ["name"]
+      }
+    }
+  }
+]

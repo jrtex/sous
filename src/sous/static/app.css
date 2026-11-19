@@ -1,0 +1,108 @@
+:root {
+  --bg: #faf8f5;
+  --surface: #ffffff;
+  --text: #1d1b19;
+  --muted: #6b655e;
+  --border: #e4dfd8;
+  --accent: #c2410c;
+  --accent-text: #ffffff;
+  --chip: #f1ece5;
+  --user: #f1ece5;
+  --done: #15803d;
+  --radius: 14px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #171513;
+    --surface: #211e1b;
+    --text: #f3efe9;
+    --muted: #a39b91;
+    --border: #36312c;
+    --accent: #fb923c;
+    --accent-text: #1a1007;
+    --chip: #2d2925;
+    --user: #2d2925;
+    --done: #4ade80;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 18px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+button, input { font: inherit; color: inherit; }
+button {
+  min-height: 52px;
+  padding: 0 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+}
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); font-weight: 600; }
+button:disabled { opacity: .4; cursor: default; }
+
+/* Recipe list */
+.list { max-width: 640px; margin: 0 auto; padding: 24px 16px; }
+.list h1 { font-size: 28px; margin: 0 0 16px; }
+.recipes { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.recipes a {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 16px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border);
+  color: inherit; text-decoration: none;
+}
+.r-title { font-weight: 600; font-size: 20px; }
+.r-meta, .empty { color: var(--muted); font-size: 15px; }
+
+/* Cook view */
+.cook {
+  max-width: 720px; margin: 0 auto; min-height: 100dvh;
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+}
+.topbar { display: flex; align-items: center; gap: 12px; }
+.topbar h1 { flex: 1; font-size: 18px; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.back { font-size: 32px; line-height: 1; color: var(--muted); text-decoration: none; padding: 0 6px; }
+.counter { color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; }
+
+.step { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+.section { color: var(--accent); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+.section:empty { display: none; }
+.step-text { font-size: 24px; line-height: 1.4; margin: 6px 0 12px; }
+.chips { list-style: none; padding: 0; margin: 0 0 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li { background: var(--chip); padding: 4px 12px; border-radius: 999px; font-size: 15px; }
+.timer-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.timer-buttons:empty { display: none; }
+
+.stepnav { display: grid; grid-template-columns: 1fr 2fr; gap: 10px; }
+
+.timers { display: flex; flex-wrap: wrap; gap: 8px; }
+.timer {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 8px 8px 8px 14px; font-variant-numeric: tabular-nums;
+}
+.timer .t-left { font-size: 22px; font-weight: 600; }
+.timer .t-label { color: var(--muted); font-size: 14px; }
+.timer button { min-height: 40px; padding: 0 12px; }
+.timer.ringing { border-color: var(--accent); animation: pulse 1s infinite; }
+@keyframes pulse { 50% { background: var(--chip); } }
+
+.chat { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+.log { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 40dvh; overflow-y: auto; }
+.msg { padding: 10px 14px; border-radius: var(--radius); max-width: 88%; white-space: pre-wrap; }
+.msg.user { align-self: flex-end; background: var(--user); }
+.msg.assistant { align-self: flex-start; background: var(--surface); border: 1px solid var(--border); font-size: 20px; }
+.msg.pending { color: var(--muted); }
+.msg.error { color: var(--accent); }
+.ask { display: flex; gap: 8px; }
+.ask input {
+  flex: 1; min-width: 0; min-height: 52px; padding: 0 14px;
+  border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface);
+}

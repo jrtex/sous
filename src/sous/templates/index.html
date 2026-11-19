@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block body %}
+<main class="list">
+  <h1>Sous</h1>
+  {% if recipes %}
+  <ul class="recipes">
+    {% for r in recipes %}
+    <li>
+      <a href="/cook/{{ r.id }}">
+        <span class="r-title">{{ r.title }}</span>
+        <span class="r-meta">{{ r.steps|length }} steps{% if r.metadata.servings %} · serves {{ r.metadata.servings }}{% endif %}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="empty">No recipes yet. Add <code>.cook</code> files to the <code>recipes/</code> folder.</p>
+  {% endif %}
+</main>
+{% endblock %}

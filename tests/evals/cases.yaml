@@ -1,0 +1,161 @@
+# Skill eval cases. Each case: recipe (id in recipes dir), step, question, plus checks:
+#   must_contain:     list; each item is a string or a list of acceptable alternatives (case-insensitive)
+#   must_not_contain: list of strings that must NOT appear
+#   label:            required | forbidden   -> "Not in the recipe" prefix for off-recipe answers
+#   max_words:        default 30
+# `recipes_dir: fixtures` cases run against tests/fixtures; real recipes go in recipes/.
+
+defaults:
+  max_words: 30
+
+cases:
+  - id: step-timing
+    recipes_dir: fixtures
+    recipe: onion-soup
+    step: 2
+    question: how long do I stir this?
+    must_contain: [["10 min", "ten min"]]
+    label: forbidden
+
+  - id: step-quantity
+    recipes_dir: fixtures
+    recipe: onion-soup
+    step: 1
+    question: how many onions?
+    must_contain: [["4", "four"]]
+    label: forbidden
+
+  - id: total-butter
+    recipes_dir: fixtures
+    recipe: onion-soup
+    step: 1
+    question: how much butter do I need for the whole recipe?
+    must_contain: ["50 g", ["2 tbsp", "2 tablespoons"]]
+    label: forbidden
+
+  - id: convert-volume
+    recipes_dir: fixtures
+    recipe: onion-soup
+    step: 4
+    question: how much stock is that in cups?
+    must_contain: [["6.3", "6⅓", "6 1/3"]]
+
+  - id: refuse-vol-weight
+    recipes_dir: fixtures
+    recipe: onion-soup
+    step: 1
+    question: how many cups is the butter here?
+    must_contain: ["50 g"]
+    must_not_contain: ["0.2 cup", "1/4 cup", "¼ cup", "0.25 cup"]
+
+  - id: current-step-timer
+    recipes_dir: fixtures
+    recipe: onion-soup
+    step: 4
+    question: how long?
+    must_contain: [["30 min", "half an hour", "1/2 hour", "½ hour"]]
+
+  - id: next-step
+    recipes_dir: fixtures
+    recipe: onion-soup
+    step: 2
+    question: what's next?
+    must_contain: [["butter", "caramelis"]]
+
+  - id: off-recipe-substitution
+    recipes_dir: fixtures
+    recipe: onion-soup
+    step: 4
+    question: can I use vegetable stock instead?
+    label: required
+
+  - id: off-recipe-technique
+    recipes_dir: fixtures
+    recipe: onion-soup
+    step: 1
+    question: what's the best way to slice onions without crying?
+    label: required
+
+  - id: food-safety
+    recipes_dir: fixtures
+    recipe: onion-soup
+    step: 5
+    question: if I add chicken, what temperature should it reach?
+    must_contain: [["74", "165"]]
+    label: required
+
+  - id: temp-convert
+    recipes_dir: fixtures
+    recipe: onion-soup
+    step: 1
+    question: what's 180 C in fahrenheit?
+    must_contain: ["356"]
+
+  - id: unspecified-amount
+    recipes_dir: fixtures
+    recipe: onion-soup
+    step: 5
+    question: how much pepper?
+    must_not_contain: ["1 tsp", "1/2 tsp", "pinch of 1"]
+
+  # ---- recipes/chicken-au-poivre.cook ----
+  - id: poivre-sear-time
+    recipe: chicken-au-poivre
+    step: 2
+    question: how long per side?
+    must_contain: ["6", "8"]
+    label: forbidden
+
+  - id: poivre-not-cooked-after-sear
+    recipe: chicken-au-poivre
+    step: 2
+    question: is the chicken cooked through now?
+    must_contain: [["not", "no"]]
+    label: forbidden
+
+  - id: poivre-total-salt
+    recipe: chicken-au-poivre
+    step: 1
+    question: how much salt in total for the whole recipe?
+    must_contain: [["1 tsp", "1 teaspoon", "one teaspoon"]]
+    must_not_contain: ["7 tsp", "2 tbsp"]
+
+  - id: poivre-peppercorns
+    recipe: chicken-au-poivre
+    step: 4
+    question: how many peppercorns?
+    must_contain: [["1 tbsp", "1 tablespoon", "one tablespoon"], "crush"]
+    label: forbidden
+
+  - id: poivre-cognac-sub-in-recipe
+    recipe: chicken-au-poivre
+    step: 3
+    question: I don't have cognac, what can I use?
+    must_contain: ["brandy"]
+    label: forbidden       # the recipe itself says "or brandy"
+
+  - id: poivre-cream-ml
+    recipe: chicken-au-poivre
+    step: 4
+    question: how much cream is that in ml?
+    must_contain: [["177", "180"]]
+
+  - id: poivre-sauce-done
+    recipe: chicken-au-poivre
+    step: 5
+    question: how do I know when it's done?
+    must_contain: [["back of a spoon", "coat"]]
+
+  - id: poivre-chicken-temp
+    recipe: chicken-au-poivre
+    step: 5
+    question: what internal temperature should the chicken hit?
+    must_contain: [["74", "165"]]
+    label: required        # not stated in the recipe
+
+  - id: poivre-chicken-weight-cups
+    recipe: chicken-au-poivre
+    step: 1
+    question: how many cups of chicken is that?
+    must_contain: ["2 lb"]
+    must_not_contain: ["4 cups", "6 cups"]

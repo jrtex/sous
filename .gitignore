@@ -1,0 +1,30 @@
+# Python / tooling
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+dist/
+build/
+*.egg-info/
+
+# Local configuration and secrets (never commit)
+.env
+.env.*
+!.env.example
+*.local
+*.local.*
+.claude/settings.local.json
+*.pem
+*.key
+
+# Logs and editor/OS clutter
+*.log
+.idea/
+.vscode/
+.DS_Store
+
+# Personal recipe library stays local; only the example recipe is published
+recipes/*
+!recipes/example-*.cook
